@@ -27,10 +27,7 @@ import {
   transition,
   width,
 } from 'onno-react';
-import * as R from 'ramda';
-import * as React from 'react';
 import styled from '@emotion/styled';
-import { StyleSet, StyleValue } from '../types/ui';
 import th from './theme';
 
 // Div is the base layout component
@@ -43,6 +40,7 @@ interface CustomDivProps {
   justifyEnd?: boolean;
   justifyStart?: boolean;
   pointer?: boolean;
+  relative?: boolean;
   wrap?: boolean;
 }
 export type DivProps = BackgroundSetProps &
@@ -65,17 +63,19 @@ const customOptions: (props: CustomDivProps) => any = ({
   justifyEnd,
   justifyStart,
   pointer,
+  relative,
   wrap,
 }) => ({
   alignItems: alignStart ? 'flex-start' : alignEnd ? 'flex-end' : undefined,
+  cursor: pointer ? 'pointer' : undefined,
+  flexGrow: grow,
+  flexWrap: wrap ? 'wrap' : undefined,
   justifyContent: justifyStart
     ? 'flex-start'
     : justifyEnd
     ? 'flex-end'
     : undefined,
-  cursor: pointer ? 'pointer' : undefined,
-  flexGrow: grow,
-  flexWrap: wrap ? 'wrap' : undefined,
+  position: relative ? 'relative' : undefined,
   [th.breakpointQueries.small]:
     columnOnMobile || columnReverseOnMobile
       ? { flexDirection: columnReverseOnMobile ? 'column-reverse' : 'column' }
@@ -121,46 +121,15 @@ const FlexColumn = styled(Flex)<DivProps & any>(
   ...divPropsSet,
 );
 
-interface GridProps {
-  children: React.ReactNode;
-  customStyles?: StyleSet;
-  evenSpacing?: boolean;
-  id: string;
-  itemWidth?: StyleValue;
-  columnGap?: StyleValue;
-  maxColumns: number;
-  wrap?: boolean;
-}
-const Grid = ({
-  children,
-  columnGap = 0,
-  evenSpacing,
-  id,
-  itemWidth,
-  maxColumns,
-  wrap,
-  ...rest
-}: GridProps & DivProps) => (
-  <FlexBetween
-    flexWrap={wrap ? 'wrap' : undefined}
-    mx={`-${columnGap}`}
-    {...rest}>
-    {React.Children.map(children, (child, index) => (
-      <Div
-        key={`${id}-${index}`}
-        mx={columnGap}
-        width={itemWidth ? itemWidth : undefined}>
-        {child}
-      </Div>
-    ))}
-    {/* generates a spacer for each column up to maxColumns to ensure even spacing */}
-    {children &&
-      evenSpacing &&
-      R.times(
-        index => <Div key={`${id}-space-${index}`} width={itemWidth} />,
-        (Object.keys(children).length % maxColumns) + 2,
-      )}
-  </FlexBetween>
+const Grid = styled(Div)<DivProps>(
+  {
+    display: 'grid',
+    gridGap: 1,
+    gridAutoRows: 'min-content',
+    gridAutoFlow: 'row',
+    gridTemplateColumns: ['repeat(2, 1fr)', `repeat(5, 1fr)`],
+  },
+  ...divPropsSet,
 );
 
 export interface ScrollProps {
@@ -205,8 +174,8 @@ export default {
   FlexBetween,
   FlexCentered,
   FlexColumn,
-  Primary,
   Grid,
+  Primary,
   Img,
   PageContent,
   Scroll,

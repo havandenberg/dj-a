@@ -1,25 +1,18 @@
 import { DESKTOP, SMALL, TABLET, TABLET_DOWN, TABLET_UP, TINY } from './utils';
 
 export const colors = {
-  background: '#FFFFFF',
+  background: '#000000',
   black: '#000000',
   gray: '#666666',
   white: '#FFFFFF',
   brand: {
-    primary: '#E7D25C',
+    primary: '#5185FF',
     secondary: '#FF6A00',
   },
   text: {
-    main: '#000000',
+    main: '#FFFFFF',
     link: '#E7D25C',
-    inv: '#FFFFFF',
-  },
-  fill: {
-    main: '#F7F4EF',
-    alt: '#DDDAD4',
-    inv: '#FFFFFF',
-    invAlt: '#D8D8D8',
-    debug: 'rgba(0,153,255,0.25)',
+    inv: '#000000',
   },
   status: {
     info: '#0277BD',
@@ -79,8 +72,8 @@ export const widths = {
 
 // Typography
 export const fontFamilies = {
-  heading: 'Microstyle-Regular, system-ui, sans-serif',
-  main: 'Microstyle-Regular, system-ui, sans-serif',
+  heading: 'OPTIEdgar-Bold, system-ui, sans-serif',
+  main: 'OPTIEdgar-Bold, system-ui, sans-serif',
 };
 
 const getFontSize = (value: number, modifier: number) =>
@@ -216,7 +209,7 @@ const burgerMenuStyles = {
 
 export const colorStyles = {
   main: {
-    background: colors.fill.main,
+    background: colors.background,
     color: colors.text.main,
   },
 };
@@ -246,30 +239,19 @@ export const globalStyles = {
   },
   // Text
   'html,button': {
+    ...textStyles.main,
     color: colors.text.main,
     fontSize: fontSizes.main,
-    textStyle: textStyles.main,
     margin: 0,
     padding: 0,
   },
   body: {
     background: colors.background,
-    fontFamily: fontFamilies.main,
     letterSpacing: 2,
     margin: 0,
     overflowX: 'hidden',
     overflowY: 'auto',
     padding: 0,
-  },
-  '@media(min-width:360px)': {
-    'html,button': {
-      fontSize: '18px',
-    },
-  },
-  '@media(min-width:720px)': {
-    'html,button': {
-      fontSize: '20px',
-    },
   },
   p: {
     lineHeight: 2,
@@ -277,20 +259,17 @@ export const globalStyles = {
   },
   // Headings
   'h1,h2,h3,h4,h5,h6': {
+    ...textStyles.heading,
     margin: 0,
     marginBottom: '1rem',
-    textStyle: textStyles.heading,
   },
   h1: {
-    fontFamily: fontFamilies.heading,
     fontSize: fontSizes.h1,
   },
   h2: {
-    fontFamily: fontFamilies.heading,
     fontSize: fontSizes.h2,
   },
   h3: {
-    fontFamily: fontFamilies.heading,
     fontSize: fontSizes.h3,
   },
   // Formatting
@@ -318,7 +297,6 @@ export const globalStyles = {
   // Button
   button: {
     border: 'none',
-    fontFamily: fontFamilies.main,
     paddingX: '32px',
   },
 };

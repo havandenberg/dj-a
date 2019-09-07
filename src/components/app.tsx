@@ -7,18 +7,16 @@ import {
   Switch,
 } from 'react-router-dom';
 import styled from '@emotion/styled';
+import Landing from '../components/landing';
 import Global from '../ui/global';
 import l from '../ui/layout';
 import th from '../ui/theme';
-import ty from '../ui/typography';
 
 const Main = styled(l.Div)({
   margin: '0 auto',
   maxWidth: th.widths.maxPage,
   minHeight: '100vh',
 });
-
-Main.displayName = 'Main';
 
 interface State {
   loading: boolean;
@@ -31,11 +29,7 @@ class App extends React.Component<{}, State> {
         <ThemeProvider theme={th}>
           <Main id="top">
             <Switch>
-              <Route
-                exact
-                path="/"
-                component={() => <ty.H1 center>DJ-A</ty.H1>}
-              />
+              <Route exact path="/" component={() => <Landing />} />
               <Redirect to="/" />
             </Switch>
           </Main>
